@@ -85,7 +85,7 @@ elif st.session_state.jogo_selecionado:
     todos_os_jogos.update({
         "FIFA 23": {
             "preco": 0.25,
-            "imagem": "c:/Users/a25679/Downloads/fifa.png",
+            "imagem": "images/fifa.png",
             "descricao": "O melhor do futebol virtual, com gráficos incríveis e jogabilidade realista.",
             "genero": "Esporte",
             "ano": "2023",
@@ -94,7 +94,7 @@ elif st.session_state.jogo_selecionado:
         },
         "Call of Duty": {
             "preco": 0.29,
-            "imagem": "c:/Users/a25679/Downloads/call_of_duty-logo-brandlogos.net_.png",
+            "imagem": "images/call_of_duty-logo-brandlogos.net_.png",
             "descricao": "Ação intensa em primeira pessoa em batalhas épicas.",
             "genero": "Tiro em primeira pessoa",
             "ano": "2022",
@@ -103,7 +103,7 @@ elif st.session_state.jogo_selecionado:
         },
         "GTA V": {
             "preco": 0.27,
-            "imagem": "c:/Users/a25679/Downloads/gta.png",
+            "imagem": "images/gta.png",
             "descricao": "Explore Los Santos em um dos maiores sucessos de mundo aberto.",
             "genero": "Ação/Aventura",
             "ano": "2013",
@@ -112,7 +112,7 @@ elif st.session_state.jogo_selecionado:
         },
         "Minecraft": {
             "preco": 0.19,
-            "imagem": "c:/Users/a25679/Downloads/minecraft-logo-with-basic-block-structure-03dch9gg2iy4hthk.jpg",  # nova imagem local
+            "imagem": "images/minecraft-logo-with-basic-block-structure-03dch9gg2iy4hthk.jpg",  # nova imagem local
             "descricao": "Construa e explore mundos infinitos em Minecraft.",
             "genero": "Sandbox",
             "ano": "2011",
@@ -121,7 +121,7 @@ elif st.session_state.jogo_selecionado:
         },
         "The Witcher 3": {
             "preco": 0.28,
-            "imagem": "https://upload.wikimedia.org/wikipedia/pt/0/0c/Witcher_3_capa.png",
+            "imagem": "images/rdr2.png",
             "descricao": "Uma aventura épica em um mundo aberto de fantasia.",
             "genero": "RPG",
             "ano": "2015",
@@ -197,7 +197,7 @@ elif st.session_state.jogo_selecionado:
         },
         "Elden Ring": {
             "preco": 0.33,
-            "imagem": "c:/Users/a25679/Downloads/elden-ring2086.jpg",  # nova imagem local
+            "imagem": "images/elden-ring2086.jpg",  # nova imagem local
             "descricao": "Explore as Terras Intermédias neste RPG de ação desafiador.",
             "genero": "RPG/Ação",
             "ano": "2022",
@@ -272,17 +272,17 @@ elif st.session_state.pagina == "Home":
     st.subheader("🎲 Jogos Populares")
     col1, col2, col3 = st.columns(3)
     with col1:
-        st.image("c:/Users/a25679/Downloads/fifa.png", caption="FIFA 23", use_container_width=True)
+        st.image("images/fifa.png", caption="FIFA 23", use_container_width=True)
         if st.button("Ver FIFA 23"):
             st.session_state.jogo_selecionado = "FIFA 23"
             st.rerun()
     with col2:
-        st.image("c:/Users/a25679/Downloads/call_of_duty-logo-brandlogos.net_.png", caption="Call of Duty", use_container_width=True)
+        st.image("images/call_of_duty-logo-brandlogos.net_.png", caption="Call of Duty", use_container_width=True)
         if st.button("Ver Call of Duty"):
             st.session_state.jogo_selecionado = "Call of Duty"
             st.rerun()
     with col3:
-        st.image("c:/Users/a25679/Downloads/gta.png", caption="GTA V", use_container_width=True)
+        st.image("images/gta.png", caption="GTA V", use_container_width=True)
         if st.button("Ver GTA V"):
             st.session_state.jogo_selecionado = "GTA V"
             st.rerun()
@@ -322,7 +322,7 @@ elif st.session_state.pagina == "Aluguer":
     jogos_info = {
         "FIFA 23": {
             "preco": 0.25,
-            "imagem": "c:/Users/a25679/Downloads/fifa.png",
+            "imagem": "images/fifa.png",
             "descricao": "O melhor do futebol virtual, com gráficos incríveis e jogabilidade realista.",
             "genero": "Esporte",
             "ano": "2023",
@@ -331,7 +331,7 @@ elif st.session_state.pagina == "Aluguer":
         },
         "Call of Duty": {
             "preco": 0.29,
-            "imagem": "c:/Users/a25679/Downloads/call_of_duty-logo-brandlogos.net_.png",
+            "imagem": "images/call_of_duty-logo-brandlogos.net_.png",
             "descricao": "Ação intensa em primeira pessoa em batalhas épicas.",
             "genero": "Tiro em primeira pessoa",
             "ano": "2022",
@@ -340,7 +340,7 @@ elif st.session_state.pagina == "Aluguer":
         },
         "GTA V": {
             "preco": 0.27,
-            "imagem": "c:/Users/a25679/Downloads/gta.png",
+            "imagem": "images/gta.png",
             "descricao": "Explore Los Santos em um dos maiores sucessos de mundo aberto.",
             "genero": "Ação/Aventura",
             "ano": "2013",
@@ -349,7 +349,7 @@ elif st.session_state.pagina == "Aluguer":
         },
         "Minecraft": {
             "preco": 0.19,
-            "imagem": "c:/Users/a25679/Downloads/minecraft-logo-with-basic-block-structure-03dch9gg2iy4hthk.jpg",  # nova imagem local
+            "imagem": "images/minecraft-logo-with-basic-block-structure-03dch9gg2iy4hthk.jpg",  # nova imagem local
             "descricao": "Construa e explore mundos infinitos em Minecraft.",
             "genero": "Sandbox",
             "ano": "2011",
@@ -358,7 +358,7 @@ elif st.session_state.pagina == "Aluguer":
         },
         "The Witcher 3": {
             "preco": 0.28,
-            "imagem": "c:/Users/a25679/Downloads/2529001-witcherlogo.jpg",  # nova imagem local
+            "imagem": "images/2529001-witcherlogo.jpg",  # nova imagem local
             "descricao": "Uma aventura épica em um mundo aberto de fantasia.",
             "genero": "RPG",
             "ano": "2015",
@@ -400,7 +400,7 @@ elif st.session_state.pagina == "Biblioteca":
     biblioteca_jogos = {
         "FIFA 23": {
             "preco": 0.25,
-            "imagem": "c:/Users/a25679/Downloads/fifa.png",
+            "imagem": "images/fifa.png",
             "descricao": "O melhor do futebol virtual, com gráficos incríveis e jogabilidade realista.",
             "genero": "Esporte",
             "ano": "2023",
@@ -409,7 +409,7 @@ elif st.session_state.pagina == "Biblioteca":
         },
         "Call of Duty": {
             "preco": 0.29,
-            "imagem": "c:/Users/a25679/Downloads/call_of_duty-logo-brandlogos.net_.png",
+            "imagem": "images/call_of_duty-logo-brandlogos.net_.png",
             "descricao": "Ação intensa em primeira pessoa em batalhas épicas.",
             "genero": "Tiro em primeira pessoa",
             "ano": "2022",
@@ -418,7 +418,7 @@ elif st.session_state.pagina == "Biblioteca":
         },
         "GTA V": {
             "preco": 0.27,
-            "imagem": "c:/Users/a25679/Downloads/gta.png",
+            "imagem": "images/gta.png",
             "descricao": "Explore Los Santos em um dos maiores sucessos de mundo aberto.",
             "genero": "Ação/Aventura",
             "ano": "2013",
@@ -427,7 +427,7 @@ elif st.session_state.pagina == "Biblioteca":
         },
         "Minecraft": {
             "preco": 0.19,
-            "imagem": "c:/Users/a25679/Downloads/minecraft-logo-with-basic-block-structure-03dch9gg2iy4hthk.jpg",
+            "imagem": "images/minecraft-logo-with-basic-block-structure-03dch9gg2iy4hthk.jpg",
             "descricao": "Construa e explore mundos infinitos em Minecraft.",
             "genero": "Sandbox",
             "ano": "2011",
@@ -436,7 +436,7 @@ elif st.session_state.pagina == "Biblioteca":
         },
         "The Witcher 3": {
             "preco": 0.28,
-            "imagem": "c:/Users/a25679/Downloads/2529001-witcherlogo.jpg",
+            "imagem": "images/2529001-witcherlogo.jpg",
             "descricao": "Uma aventura épica em um mundo aberto de fantasia.",
             "genero": "RPG",
             "ano": "2015",
@@ -508,7 +508,7 @@ elif st.session_state.pagina == "Biblioteca":
         },
         "Elden Ring": {
             "preco": 0.33,
-            "imagem": "c:/Users/a25679/Downloads/elden-ring2086.jpg",
+            "imagem": "images/elden-ring2086.jpg",
             "descricao": "Explore as Terras Intermédias neste RPG de ação desafiador.",
             "genero": "RPG/Ação",
             "ano": "2022",
@@ -654,7 +654,7 @@ elif st.session_state.pagina == "OutrosJogos":
         },
         "Elden Ring": {
             "preco": 0.33,
-            "imagem": "c:/Users/a25679/Downloads/elden-ring2086.jpg",
+            "imagem": "images/elden-ring2086.jpg",
             "descricao": "Explore as Terras Intermédias neste RPG de ação desafiador.",
             "genero": "RPG/Ação",
             "ano": "2022",
