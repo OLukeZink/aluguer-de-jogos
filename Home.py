@@ -76,7 +76,7 @@ elif st.session_state.pagina == "Registro":
             st.success("✅ Usuário registrado com sucesso!")
             st.session_state.pagina = "Login"
 
-# Página de detalhes do jogo selecionado (igual para todos os jogos)
+# Página de detalhes do jogo selecionado
 elif st.session_state.jogo_selecionado:
     # Junta todos os jogos num só dicionário
     todos_os_jogos = {}
@@ -264,11 +264,8 @@ elif st.session_state.jogo_selecionado:
 elif st.session_state.pagina == "Home":
     st.markdown("<h1 style='text-align: center;'>🎮 Bem-vindo à Loja de Aluguer de Jogos!</h1>", unsafe_allow_html=True)
     st.markdown("<p style='text-align: center; font-size: 18px;'>Alugue os melhores jogos e divirta-se com seus amigos!</p>", unsafe_allow_html=True)
-
-    # Adicionando uma imagem para tornar a página mais visual
     st.image("https://images.unsplash.com/photo-1511512578047-dfb367046420?auto=format&fit=crop&w=800&q=80", use_container_width=True)
 
-    # Jogos populares
     st.subheader("🎲 Jogos Populares")
     col1, col2, col3 = st.columns(3)
     with col1:
@@ -287,7 +284,6 @@ elif st.session_state.pagina == "Home":
             st.session_state.jogo_selecionado = "GTA V"
             st.rerun()
 
-    # Botões estilizados
     col1, col2 = st.columns(2)
     with col1:
         if st.button("🎮 Ir para Aluguer"):
@@ -295,12 +291,11 @@ elif st.session_state.pagina == "Home":
     with col2:
         if st.button("🚪 Logout"):
             logout()
-    with col3:
+    with col1:
         if st.button("📚 Ver Biblioteca"):
             st.session_state.pagina = "Biblioteca"
             st.rerun()
 
-    # Histórico de aluguéis
     if st.session_state.historico:
         st.subheader("📜 Histórico de Aluguéis")
         historico_df = pd.DataFrame(
@@ -318,7 +313,6 @@ elif st.session_state.pagina == "Home":
 elif st.session_state.pagina == "Aluguer":
     st.title("🛒 Aluguer de Jogos")
 
-    # Lista de jogos disponíveis com preços e imagens
     jogos_info = {
         "FIFA 23": {
             "preco": 0.25,
@@ -373,7 +367,6 @@ elif st.session_state.pagina == "Aluguer":
     st.image(jogos_info[jogo_selecionado]["imagem"], width=250)
     st.markdown(f"**Preço por dia:** €{jogos_info[jogo_selecionado]['preco']:.2f}")
 
-    # Aluguer direto na página do jogo
     st.header("📋 Alugar este jogo")
     dias_aluguer = st.number_input("📅 Dias de Aluguer", min_value=1, max_value=600, step=1, key=f"dias_{jogo_selecionado}")
     preco_total = jogos_info[jogo_selecionado]['preco'] * dias_aluguer
@@ -392,11 +385,10 @@ elif st.session_state.pagina == "Aluguer":
     if st.button("🔙 Voltar para Home"):
         mudar_para_home()
 
-# Página Biblioteca de Jogos
+# Página Biblioteca de Jogos — all logic and data ONLY inside this block!
 elif st.session_state.pagina == "Biblioteca":
     st.title("📚 Biblioteca de Jogos Disponíveis")
 
-    # Junta todos os jogos em um único dicionário
     biblioteca_jogos = {
         "FIFA 23": {
             "preco": 0.25,
@@ -537,155 +529,48 @@ elif st.session_state.pagina == "Biblioteca":
 
     filtro_col, jogos_col = st.columns([1, 5])
 
-# Layout with filters on the left and games on the right
-filtro_col, jogos_col = st.columns([1, 5])  # 1 part filters, 5 parts games
+    with filtro_col:
+        st.subheader("Filtros")
+        precos = [info["preco"] for info in biblioteca_jogos.values() if isinstance(info, dict) and "preco" in info]
+        preco_min = min(precos)
+        preco_max = max(precos)
+        preco_filtro = st.slider(
+            "Preço (€ por dia)",
+            float(preco_min),
+            float(preco_max),
+            (float(preco_min), float(preco_max)),
+            step=0.01
+        )
+        generos = sorted(set(info["genero"] for info in biblioteca_jogos.values()))
+        genero_filtro = st.multiselect("Género", generos, default=generos)
+        plataformas = sorted(set(
+            sum([info["plataformas"].replace(" ", "").split(",") for info in biblioteca_jogos.values()], [])
+        ))
+        plataforma_filtro = st.multiselect("Plataforma", plataformas, default=plataformas)
 
-with filtro_col:
-    st.subheader("Filtros")
-    precos = [info.get("preco") for info in biblioteca_jogos.values() if isinstance(info, dict) and "preco" in info]
-    preco_min = min(precos)
-    preco_max = max(precos)
-    preco_filtro = st.slider("Preço (€ por dia)", float(preco_min), float(preco_max), (float(preco_min), float(preco_max)), step=0.01)
-    generos = sorted(set(info["genero"] for info in biblioteca_jogos.values()))
-    genero_filtro = st.multiselect("Género", generos, default=generos)
-    plataformas = sorted(set(sum([info["plataformas"].replace(" ", "").split(",") for info in biblioteca_jogos.values()], [])))
-    plataforma_filtro = st.multiselect("Plataforma", plataformas, default=plataformas)
+    with jogos_col:
+        if not genero_filtro:
+            genero_filtro = generos
+        if not plataforma_filtro:
+            plataforma_filtro = plataformas
 
-with jogos_col:
-    # If no genre or platform is selected, show all games
-    if not genero_filtro:
-        genero_filtro = generos
-    if not plataforma_filtro:
-        plataforma_filtro = plataformas
-
-    jogos_filtrados = {
-        nome: info for nome, info in biblioteca_jogos.items()
-        if preco_filtro[0] <= info["preco"] <= preco_filtro[1]
-        and info["genero"] in genero_filtro
-        and any(p.strip() in plataforma_filtro for p in info["plataformas"].split(","))
-    }
-
-    cols = st.columns(4)
-    for idx, (nome, info) in enumerate(jogos_filtrados.items()):
-        with cols[idx % 4]:
-            st.image(info["imagem"], caption="", use_container_width=True, output_format="auto")
-            st.markdown(f"<h2 style='text-align:center; font-size:2rem'>{nome}</h2>", unsafe_allow_html=True)
-            st.markdown(f"<div style='text-align:center; font-size:1.5rem; color:#16a34a'><b>€{info['preco']:.2f}</b></div>", unsafe_allow_html=True)
-            if st.button(f"Ver {nome}", key=f"ver_{nome}"):
-                st.session_state.jogo_selecionado = nome
-                st.session_state.pagina = None
-                st.rerun()
-
-    if st.button("🔙 Voltar para Home"):
-        mudar_para_home()
-
-# Página de Outros Jogos
-if st.session_state.pagina == "OutrosJogos":
-    st.title("🎮 Outros Jogos Disponíveis")
-
-    outros_jogos = {
-        "Red Dead Redemption 2": {
-            "preco": 0.30,
-            "imagem": "https://upload.wikimedia.org/wikipedia/pt/4/44/Red_Dead_Redemption_2_capa.png",
-            "descricao": "Viva o Velho Oeste em um dos jogos mais imersivos já feitos.",
-            "genero": "Ação/Aventura",
-            "ano": "2018",
-            "plataformas": "PC, PlayStation, Xbox",
-            "trailer": "https://www.youtube.com/watch?v=eaW0tYpxyp0"
-        },
-        "Cyberpunk 2077": {
-            "preco": 0.28,
-            "imagem": "https://upload.wikimedia.org/wikipedia/pt/9/9f/Cyberpunk_2077_capa.png",
-            "descricao": "Explore Night City em um RPG futurista de mundo aberto.",
-            "genero": "RPG/Ação",
-            "ano": "2020",
-            "plataformas": "PC, PlayStation, Xbox",
-            "trailer": "https://www.youtube.com/watch?v=FknHjl7eQ6o"
-        },
-        "Fortnite": {
-            "preco": 0.15,
-            "imagem": "https://upload.wikimedia.org/wikipedia/pt/0/09/Fortnite_capa.png",
-            "descricao": "O battle royale mais jogado do mundo.",
-            "genero": "Battle Royale",
-            "ano": "2017",
-            "plataformas": "PC, PlayStation, Xbox, Switch, Mobile",
-            "trailer": "https://www.youtube.com/watch?v=2gUtfBmw86Y"
-        },
-        "God of War": {
-            "preco": 0.32,
-            "imagem": "https://upload.wikimedia.org/wikipedia/pt/a/a7/God_of_War_4_capa.png",
-            "descricao": "A jornada épica de Kratos e Atreus pela mitologia nórdica.",
-            "genero": "Ação/Aventura",
-            "ano": "2018",
-            "plataformas": "PC, PlayStation",
-            "trailer": "https://www.youtube.com/watch?v=K0u_kAWLJOA"
-        },
-        "Horizon Zero Dawn": {
-            "preco": 0.27,
-            "imagem": "https://upload.wikimedia.org/wikipedia/pt/3/3a/Horizon_Zero_Dawn_capa.png",
-            "descricao": "Explore um mundo pós-apocalíptico dominado por máquinas.",
-            "genero": "Ação/RPG",
-            "ano": "2017",
-            "plataformas": "PC, PlayStation",
-            "trailer": "https://www.youtube.com/watch?v=wzx96gYA8ek"
-        },
-        "Assassin's Creed Valhalla": {
-            "preco": 0.29,
-            "imagem": "https://upload.wikimedia.org/wikipedia/pt/9/9b/Assassin%27s_Creed_Valhalla_capa.png",
-            "descricao": "Viva como um viking em uma aventura épica.",
-            "genero": "Ação/RPG",
-            "ano": "2020",
-            "plataformas": "PC, PlayStation, Xbox",
-            "trailer": "https://www.youtube.com/watch?v=ssrNcwxALS4"
-        },
-        "F1 2023": {
-            "preco": 0.25,
-            "imagem": "https://cdn.cloudflare.steamstatic.com/steam/apps/2108330/header.jpg",
-            "descricao": "A experiência definitiva de Fórmula 1.",
-            "genero": "Corrida",
-            "ano": "2023",
-            "plataformas": "PC, PlayStation, Xbox",
-            "trailer": "https://www.youtube.com/watch?v=QFvNhsWMU0c"
-        },
-        "Elden Ring": {
-            "preco": 0.33,
-            "imagem": "https://upload.wikimedia.org/wikipedia/pt/b/b8/Elden_Ring_capa.jpg",
-            "descricao": "Explore as Terras Intermédias neste RPG de ação desafiador.",
-            "genero": "RPG/Ação",
-            "ano": "2022",
-            "plataformas": "PC, PlayStation, Xbox",
-            "trailer": "https://www.youtube.com/watch?v=E3Huy2cdih0"
-        },
-        "Spider-Man Remastered": {
-            "preco": 0.28,
-            "imagem": "https://upload.wikimedia.org/wikipedia/pt/0/0c/Spider-Man_PS4_capa.png",
-            "descricao": "Viva as aventuras do Homem-Aranha em Nova York.",
-            "genero": "Ação/Aventura",
-            "ano": "2022",
-            "plataformas": "PC, PlayStation",
-            "trailer": "https://www.youtube.com/watch?v=Nt9L1jCKGnE"
-        },
-        "Super Mario Odyssey": {
-            "preco": 0.22,
-            "imagem": "https://upload.wikimedia.org/wikipedia/pt/8/8d/Super_Mario_Odyssey_capa.png",
-            "descricao": "A aventura 3D definitiva do Mario pelo mundo.",
-            "genero": "Plataforma",
-            "ano": "2017",
-            "plataformas": "Switch",
-            "trailer": "https://www.youtube.com/watch?v=5kcdRBHM7kM"
+        jogos_filtrados = {
+            nome: info for nome, info in biblioteca_jogos.items()
+            if preco_filtro[0] <= info["preco"] <= preco_filtro[1]
+            and info["genero"] in genero_filtro
+            and any(p.strip() in plataforma_filtro for p in info["plataformas"].split(","))
         }
-    }
 
-    cols = st.columns(4)
-    for idx, (nome, info) in enumerate(outros_jogos.items()):
-        with cols[idx % 4]:
-            st.image(info["imagem"], caption=nome, use_container_width=True)
-            st.markdown(f"**{nome}**")
-            st.markdown(f"**Preço:** €{info['preco']:.2f}")
-            if st.button(f"Ver {nome}", key=f"ver_outro_{nome}"):
-                st.session_state.jogo_selecionado = nome
-                st.session_state.pagina = None
-                st.rerun()
+        cols = st.columns(4)
+        for idx, (nome, info) in enumerate(jogos_filtrados.items()):
+            with cols[idx % 4]:
+                st.image(info["imagem"], caption="", use_container_width=True, output_format="auto")
+                st.markdown(f"<h2 style='text-align:center; font-size:2rem'>{nome}</h2>", unsafe_allow_html=True)
+                st.markdown(f"<div style='text-align:center; font-size:1.5rem; color:#16a34a'><b>€{info['preco']:.2f}</b></div>", unsafe_allow_html=True)
+                if st.button(f"Ver {nome}", key=f"ver_{nome}"):
+                    st.session_state.jogo_selecionado = nome
+                    st.session_state.pagina = None
+                    st.rerun()
 
-    if st.button("🔙 Voltar para Home", key="voltar_home_outros"):
-        mudar_para_home()
+        if st.button("🔙 Voltar para Home"):
+            mudar_para_home()
