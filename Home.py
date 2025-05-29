@@ -542,7 +542,7 @@ filtro_col, jogos_col = st.columns([1, 5])  # 1 part filters, 5 parts games
 
 with filtro_col:
     st.subheader("Filtros")
-    precos = [info["preco"] for info in biblioteca_jogos.values()]
+    precos = [info.get("preco") for info in biblioteca_jogos.values() if isinstance(info, dict) and "preco" in info]
     preco_min = min(precos)
     preco_max = max(precos)
     preco_filtro = st.slider("Preço (€ por dia)", float(preco_min), float(preco_max), (float(preco_min), float(preco_max)), step=0.01)
