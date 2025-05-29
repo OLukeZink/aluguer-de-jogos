@@ -580,7 +580,7 @@ with jogos_col:
         mudar_para_home()
 
 # Página de Outros Jogos
-elif st.session_state.pagina == "OutrosJogos":
+if st.session_state.pagina == "OutrosJogos":
     st.title("🎮 Outros Jogos Disponíveis")
 
     outros_jogos = {
