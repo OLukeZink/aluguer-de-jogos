@@ -56,7 +56,7 @@ if st.session_state.pagina == "Login":
         if username in usuarios and usuarios[username] == password:
             st.session_state.username = username
             mudar_para_home()
-            st.rerun()  # Use este se estiver com Streamlit atualizado
+            st.rerun()
         else:
             st.error("❌ Usuário ou senha incorretos.")
     if st.button("Registrar"):
@@ -72,7 +72,7 @@ elif st.session_state.pagina == "Registro":
             st.error("❌ Usuário já existe!")
         else:
             usuarios[new_username] = new_password
-            salvar_usuarios(usuarios)  # Salva no arquivo
+            salvar_usuarios(usuarios)
             st.success("✅ Usuário registrado com sucesso!")
             st.session_state.pagina = "Login"
 
@@ -85,7 +85,7 @@ elif st.session_state.jogo_selecionado:
     todos_os_jogos.update({
         "FIFA 23": {
             "preco": 0.25,
-            "imagem": "images/fifa.png",
+            "imagem": "https://upload.wikimedia.org/wikipedia/pt/8/8c/FIFA_23_capa.png",
             "descricao": "O melhor do futebol virtual, com gráficos incríveis e jogabilidade realista.",
             "genero": "Esporte",
             "ano": "2023",
@@ -94,7 +94,7 @@ elif st.session_state.jogo_selecionado:
         },
         "Call of Duty": {
             "preco": 0.29,
-            "imagem": "images/call_of_duty-logo-brandlogos.net_.png",
+            "imagem": "https://upload.wikimedia.org/wikipedia/commons/2/2a/Call_of_Duty_logo.svg",
             "descricao": "Ação intensa em primeira pessoa em batalhas épicas.",
             "genero": "Tiro em primeira pessoa",
             "ano": "2022",
@@ -103,7 +103,7 @@ elif st.session_state.jogo_selecionado:
         },
         "GTA V": {
             "preco": 0.27,
-            "imagem": "images/gta.png",
+            "imagem": "https://upload.wikimedia.org/wikipedia/pt/a/a5/Grand_Theft_Auto_V_capa.png",
             "descricao": "Explore Los Santos em um dos maiores sucessos de mundo aberto.",
             "genero": "Ação/Aventura",
             "ano": "2013",
@@ -112,7 +112,7 @@ elif st.session_state.jogo_selecionado:
         },
         "Minecraft": {
             "preco": 0.19,
-            "imagem": "images/minecraft-logo-with-basic-block-structure-03dch9gg2iy4hthk.jpg",  # nova imagem local
+            "imagem": "https://upload.wikimedia.org/wikipedia/pt/5/51/Minecraft_capa.png",
             "descricao": "Construa e explore mundos infinitos em Minecraft.",
             "genero": "Sandbox",
             "ano": "2011",
@@ -121,7 +121,7 @@ elif st.session_state.jogo_selecionado:
         },
         "The Witcher 3": {
             "preco": 0.28,
-            "imagem": "images/rdr2.png",
+            "imagem": "https://upload.wikimedia.org/wikipedia/pt/0/0c/The_Witcher_3_Wild_Hunt_capa.png",
             "descricao": "Uma aventura épica em um mundo aberto de fantasia.",
             "genero": "RPG",
             "ano": "2015",
@@ -197,7 +197,7 @@ elif st.session_state.jogo_selecionado:
         },
         "Elden Ring": {
             "preco": 0.33,
-            "imagem": "images/elden-ring2086.jpg",  # nova imagem local
+            "imagem": "https://upload.wikimedia.org/wikipedia/pt/b/b8/Elden_Ring_capa.jpg",
             "descricao": "Explore as Terras Intermédias neste RPG de ação desafiador.",
             "genero": "RPG/Ação",
             "ano": "2022",
@@ -272,17 +272,17 @@ elif st.session_state.pagina == "Home":
     st.subheader("🎲 Jogos Populares")
     col1, col2, col3 = st.columns(3)
     with col1:
-        st.image("images/fifa.png", caption="FIFA 23", use_container_width=True)
+        st.image("https://upload.wikimedia.org/wikipedia/pt/8/8c/FIFA_23_capa.png", caption="FIFA 23", use_container_width=True)
         if st.button("Ver FIFA 23"):
             st.session_state.jogo_selecionado = "FIFA 23"
             st.rerun()
     with col2:
-        st.image("images/call_of_duty-logo-brandlogos.net_.png", caption="Call of Duty", use_container_width=True)
+        st.image("https://upload.wikimedia.org/wikipedia/commons/2/2a/Call_of_Duty_logo.svg", caption="Call of Duty", use_container_width=True)
         if st.button("Ver Call of Duty"):
             st.session_state.jogo_selecionado = "Call of Duty"
             st.rerun()
     with col3:
-        st.image("images/gta.png", caption="GTA V", use_container_width=True)
+        st.image("https://upload.wikimedia.org/wikipedia/pt/a/a5/Grand_Theft_Auto_V_capa.png", caption="GTA V", use_container_width=True)
         if st.button("Ver GTA V"):
             st.session_state.jogo_selecionado = "GTA V"
             st.rerun()
@@ -322,7 +322,7 @@ elif st.session_state.pagina == "Aluguer":
     jogos_info = {
         "FIFA 23": {
             "preco": 0.25,
-            "imagem": "images/fifa.png",
+            "imagem": "https://upload.wikimedia.org/wikipedia/pt/8/8c/FIFA_23_capa.png",
             "descricao": "O melhor do futebol virtual, com gráficos incríveis e jogabilidade realista.",
             "genero": "Esporte",
             "ano": "2023",
@@ -331,7 +331,7 @@ elif st.session_state.pagina == "Aluguer":
         },
         "Call of Duty": {
             "preco": 0.29,
-            "imagem": "images/call_of_duty-logo-brandlogos.net_.png",
+            "imagem": "https://upload.wikimedia.org/wikipedia/commons/2/2a/Call_of_Duty_logo.svg",
             "descricao": "Ação intensa em primeira pessoa em batalhas épicas.",
             "genero": "Tiro em primeira pessoa",
             "ano": "2022",
@@ -340,7 +340,7 @@ elif st.session_state.pagina == "Aluguer":
         },
         "GTA V": {
             "preco": 0.27,
-            "imagem": "images/gta.png",
+            "imagem": "https://upload.wikimedia.org/wikipedia/pt/a/a5/Grand_Theft_Auto_V_capa.png",
             "descricao": "Explore Los Santos em um dos maiores sucessos de mundo aberto.",
             "genero": "Ação/Aventura",
             "ano": "2013",
@@ -349,7 +349,7 @@ elif st.session_state.pagina == "Aluguer":
         },
         "Minecraft": {
             "preco": 0.19,
-            "imagem": "images/minecraft-logo-with-basic-block-structure-03dch9gg2iy4hthk.jpg",  # nova imagem local
+            "imagem": "https://upload.wikimedia.org/wikipedia/pt/5/51/Minecraft_capa.png",
             "descricao": "Construa e explore mundos infinitos em Minecraft.",
             "genero": "Sandbox",
             "ano": "2011",
@@ -358,7 +358,7 @@ elif st.session_state.pagina == "Aluguer":
         },
         "The Witcher 3": {
             "preco": 0.28,
-            "imagem": "images/2529001-witcherlogo.jpg",  # nova imagem local
+            "imagem": "https://upload.wikimedia.org/wikipedia/pt/0/0c/The_Witcher_3_Wild_Hunt_capa.png",
             "descricao": "Uma aventura épica em um mundo aberto de fantasia.",
             "genero": "RPG",
             "ano": "2015",
@@ -400,7 +400,7 @@ elif st.session_state.pagina == "Biblioteca":
     biblioteca_jogos = {
         "FIFA 23": {
             "preco": 0.25,
-            "imagem": "images/fifa.png",
+            "imagem": "https://upload.wikimedia.org/wikipedia/pt/8/8c/FIFA_23_capa.png",
             "descricao": "O melhor do futebol virtual, com gráficos incríveis e jogabilidade realista.",
             "genero": "Esporte",
             "ano": "2023",
@@ -409,7 +409,7 @@ elif st.session_state.pagina == "Biblioteca":
         },
         "Call of Duty": {
             "preco": 0.29,
-            "imagem": "images/call_of_duty-logo-brandlogos.net_.png",
+            "imagem": "https://upload.wikimedia.org/wikipedia/commons/2/2a/Call_of_Duty_logo.svg",
             "descricao": "Ação intensa em primeira pessoa em batalhas épicas.",
             "genero": "Tiro em primeira pessoa",
             "ano": "2022",
@@ -418,7 +418,7 @@ elif st.session_state.pagina == "Biblioteca":
         },
         "GTA V": {
             "preco": 0.27,
-            "imagem": "images/gta.png",
+            "imagem": "https://upload.wikimedia.org/wikipedia/pt/a/a5/Grand_Theft_Auto_V_capa.png",
             "descricao": "Explore Los Santos em um dos maiores sucessos de mundo aberto.",
             "genero": "Ação/Aventura",
             "ano": "2013",
@@ -427,7 +427,7 @@ elif st.session_state.pagina == "Biblioteca":
         },
         "Minecraft": {
             "preco": 0.19,
-            "imagem": "images/minecraft-logo-with-basic-block-structure-03dch9gg2iy4hthk.jpg",
+            "imagem": "https://upload.wikimedia.org/wikipedia/pt/5/51/Minecraft_capa.png",
             "descricao": "Construa e explore mundos infinitos em Minecraft.",
             "genero": "Sandbox",
             "ano": "2011",
@@ -436,7 +436,7 @@ elif st.session_state.pagina == "Biblioteca":
         },
         "The Witcher 3": {
             "preco": 0.28,
-            "imagem": "images/2529001-witcherlogo.jpg",
+            "imagem": "https://upload.wikimedia.org/wikipedia/pt/0/0c/The_Witcher_3_Wild_Hunt_capa.png",
             "descricao": "Uma aventura épica em um mundo aberto de fantasia.",
             "genero": "RPG",
             "ano": "2015",
@@ -508,7 +508,7 @@ elif st.session_state.pagina == "Biblioteca":
         },
         "Elden Ring": {
             "preco": 0.33,
-            "imagem": "images/elden-ring2086.jpg",
+            "imagem": "https://upload.wikimedia.org/wikipedia/pt/b/b8/Elden_Ring_capa.jpg",
             "descricao": "Explore as Terras Intermédias neste RPG de ação desafiador.",
             "genero": "RPG/Ação",
             "ano": "2022",
@@ -535,33 +535,25 @@ elif st.session_state.pagina == "Biblioteca":
         }
     }
 
-    # Layout com filtros à esquerda e jogos à direita
-    filtro_col, jogos_col = st.columns([1, 5])  # aumenta a proporção da área dos jogos
+    filtro_col, jogos_col = st.columns([1, 5])
 
     with filtro_col:
         st.subheader("Filtros")
-        # Filtro de preço
         precos = [info["preco"] for info in biblioteca_jogos.values()]
         preco_min = min(precos)
         preco_max = max(precos)
         preco_filtro = st.slider("Preço (€ por dia)", float(preco_min), float(preco_max), (float(preco_min), float(preco_max)), step=0.01)
-
-        # Filtro de género
         generos = sorted(set(info["genero"] for info in biblioteca_jogos.values()))
         genero_filtro = st.multiselect("Género", generos, default=generos)
-
-        # Filtro de plataforma
         plataformas = sorted(set(sum([info["plataformas"].replace(" ", "").split(",") for info in biblioteca_jogos.values()], [])))
         plataforma_filtro = st.multiselect("Plataforma", plataformas, default=plataformas)
 
     with jogos_col:
-        # Se nenhum género ou plataforma estiver selecionado, mostra todos os jogos
         if not genero_filtro:
             genero_filtro = generos
         if not plataforma_filtro:
             plataforma_filtro = plataformas
 
-        # Filtra os jogos pelos filtros selecionados
         jogos_filtrados = {
             nome: info for nome, info in biblioteca_jogos.items()
             if preco_filtro[0] <= info["preco"] <= preco_filtro[1]
@@ -569,7 +561,6 @@ elif st.session_state.pagina == "Biblioteca":
             and any(p.strip() in plataforma_filtro for p in info["plataformas"].split(","))
         }
 
-        # Deixa as imagens, nome e preço maiores
         cols = st.columns(4)
         for idx, (nome, info) in enumerate(jogos_filtrados.items()):
             with cols[idx % 4]:
@@ -654,7 +645,7 @@ elif st.session_state.pagina == "OutrosJogos":
         },
         "Elden Ring": {
             "preco": 0.33,
-            "imagem": "images/elden-ring2086.jpg",
+            "imagem": "https://upload.wikimedia.org/wikipedia/pt/b/b8/Elden_Ring_capa.jpg",
             "descricao": "Explore as Terras Intermédias neste RPG de ação desafiador.",
             "genero": "RPG/Ação",
             "ano": "2022",
