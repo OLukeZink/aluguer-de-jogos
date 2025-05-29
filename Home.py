@@ -537,43 +537,47 @@ elif st.session_state.pagina == "Biblioteca":
 
     filtro_col, jogos_col = st.columns([1, 5])
 
-    with filtro_col:
-        st.subheader("Filtros")
-        precos = [info["preco"] for info in biblioteca_jogos.values()]
-        preco_min = min(precos)
-        preco_max = max(precos)
-        preco_filtro = st.slider("Preço (€ por dia)", float(preco_min), float(preco_max), (float(preco_min), float(preco_max)), step=0.01)
-        generos = sorted(set(info["genero"] for info in biblioteca_jogos.values()))
-        genero_filtro = st.multiselect("Género", generos, default=generos)
-        plataformas = sorted(set(sum([info["plataformas"].replace(" ", "").split(",") for info in biblioteca_jogos.values()], [])))
-        plataforma_filtro = st.multiselect("Plataforma", plataformas, default=plataformas)
+# Layout with filters on the left and games on the right
+filtro_col, jogos_col = st.columns([1, 5])  # 1 part filters, 5 parts games
 
-    with jogos_col:
-        if not genero_filtro:
-            genero_filtro = generos
-        if not plataforma_filtro:
-            plataforma_filtro = plataformas
+with filtro_col:
+    st.subheader("Filtros")
+    precos = [info["preco"] for info in biblioteca_jogos.values()]
+    preco_min = min(precos)
+    preco_max = max(precos)
+    preco_filtro = st.slider("Preço (€ por dia)", float(preco_min), float(preco_max), (float(preco_min), float(preco_max)), step=0.01)
+    generos = sorted(set(info["genero"] for info in biblioteca_jogos.values()))
+    genero_filtro = st.multiselect("Género", generos, default=generos)
+    plataformas = sorted(set(sum([info["plataformas"].replace(" ", "").split(",") for info in biblioteca_jogos.values()], [])))
+    plataforma_filtro = st.multiselect("Plataforma", plataformas, default=plataformas)
 
-        jogos_filtrados = {
-            nome: info for nome, info in biblioteca_jogos.items()
-            if preco_filtro[0] <= info["preco"] <= preco_filtro[1]
-            and info["genero"] in genero_filtro
-            and any(p.strip() in plataforma_filtro for p in info["plataformas"].split(","))
-        }
+with jogos_col:
+    # If no genre or platform is selected, show all games
+    if not genero_filtro:
+        genero_filtro = generos
+    if not plataforma_filtro:
+        plataforma_filtro = plataformas
 
-        cols = st.columns(4)
-        for idx, (nome, info) in enumerate(jogos_filtrados.items()):
-            with cols[idx % 4]:
-                st.image(info["imagem"], caption="", use_container_width=True, output_format="auto")
-                st.markdown(f"<h2 style='text-align:center; font-size:2rem'>{nome}</h2>", unsafe_allow_html=True)
-                st.markdown(f"<div style='text-align:center; font-size:1.5rem; color:#16a34a'><b>€{info['preco']:.2f}</b></div>", unsafe_allow_html=True)
-                if st.button(f"Ver {nome}", key=f"ver_{nome}"):
-                    st.session_state.jogo_selecionado = nome
-                    st.session_state.pagina = None
-                    st.rerun()
+    jogos_filtrados = {
+        nome: info for nome, info in biblioteca_jogos.items()
+        if preco_filtro[0] <= info["preco"] <= preco_filtro[1]
+        and info["genero"] in genero_filtro
+        and any(p.strip() in plataforma_filtro for p in info["plataformas"].split(","))
+    }
 
-        if st.button("🔙 Voltar para Home"):
-            mudar_para_home()
+    cols = st.columns(4)
+    for idx, (nome, info) in enumerate(jogos_filtrados.items()):
+        with cols[idx % 4]:
+            st.image(info["imagem"], caption="", use_container_width=True, output_format="auto")
+            st.markdown(f"<h2 style='text-align:center; font-size:2rem'>{nome}</h2>", unsafe_allow_html=True)
+            st.markdown(f"<div style='text-align:center; font-size:1.5rem; color:#16a34a'><b>€{info['preco']:.2f}</b></div>", unsafe_allow_html=True)
+            if st.button(f"Ver {nome}", key=f"ver_{nome}"):
+                st.session_state.jogo_selecionado = nome
+                st.session_state.pagina = None
+                st.rerun()
+
+    if st.button("🔙 Voltar para Home"):
+        mudar_para_home()
 
 # Página de Outros Jogos
 elif st.session_state.pagina == "OutrosJogos":
